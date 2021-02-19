@@ -31,3 +31,16 @@ def images_mask_detection :
 	# load the face mask detector model from disk
 	print("[INFO] loading face mask detector model...")
 	model = load_model(args["model"])
+
+    image = cv2.imread(args["image"])
+	orig = image.copy()
+	(h, w) = image.shape[:2]
+
+	# construct a blob from the image
+	blob = cv2.dnn.blobFromImage(image, 1.0, (300, 300),
+		(104.0, 177.0, 123.0))
+
+	# pass the blob through the network and obtain the face detections
+	print("[INFO] computing face detections...")
+	net.setInput(blob)
+	detections = net.forward()
