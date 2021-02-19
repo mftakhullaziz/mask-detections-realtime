@@ -68,5 +68,19 @@ def images_mask_detection :
 				title = "***No Mask Detected***",
 				message = "Wear Mask to stay safe! ",
 				app_icon = "images/1.ico",    #ico file should be downloaded
-				timeout = 1
-            			)
+				timeout = 1)
+
+            label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
+
+			# display the label and bounding box rectangle on the output
+			# frame
+			cv2.putText(image, label, (startX, startY - 10),
+				cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+			cv2.rectangle(image, (startX, startY), (endX, endY), color, 2)
+
+	# show the output image
+	cv2.imshow("Output", image)
+	cv2.waitKey(0)
+	
+if __name__ == "__main__":
+	mask_image()
