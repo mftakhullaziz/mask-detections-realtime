@@ -21,3 +21,13 @@ def images_mask_detection :
 	ap.add_argument("-c", "--confidence", type=float, default=0.5,
 		help="minimum probability to filter weak detections")
 	args = vars(ap.parse_args())
+
+    print("[INFO] loading face detector model ...")
+	prototxtPath = os.path.sep.join([args["face"], "model_face_detection_from_opencv/deploy.prototxt"])
+	weightsPath = os.path.sep.join([args["face"],
+		"model_face_detection_from_opencv/res10_300x300_ssd_iter_140000.caffemodel"])
+	net = cv2.dnn.readNet(prototxtPath, weightsPath)
+
+	# load the face mask detector model from disk
+	print("[INFO] loading face mask detector model...")
+	model = load_model(args["model"])
