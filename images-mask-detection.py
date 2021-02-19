@@ -58,3 +58,15 @@ def images_mask_detection :
 			face = img_to_array(face)
 			face = preprocess_input(face)
 			face = np.expand_dims(face, axis=0)
+
+            (mask, withoutMask) = model.predict(face)[0]
+
+            label = "Mask" if mask > withoutMask else "No Mask"
+			color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
+			if label == "No Mask":
+			notification.notify(
+				title = "***No Mask Detected***",
+				message = "Wear Mask to stay safe! ",
+				app_icon = "images/1.ico",    #ico file should be downloaded
+				timeout = 1
+            			)
